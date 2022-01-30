@@ -1,0 +1,6 @@
+{% load static %}
+{% autoescape off %}
+
+    Hello {{ user }}, This is an email to acknowledge the receipt of your recent order with Order Number {{ order.order_number }}.<a href="{% url 'my_orders' %}">Click here to View your orders</a>
+
+{% endautoescape %}
