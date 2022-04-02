@@ -22,7 +22,7 @@ def payments(request):
     body = json.loads(request.body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
     # print('Current CSRF_Token: ', django.middleware.csrf.get_token(request))
-    # print(body)
+    print(body)
 
     # Store Transaction Details inside of Payment Model
     payment = Payment(
@@ -69,20 +69,20 @@ def payments(request):
 
     # Send Order Receipt Email
 
-    mail_subject = 'Thank you for your Order!'
-    html_message = render_to_string('orders/order_received_email.html', {
-        'user' : request.user,
-        'order': order,
-        'orderproduct': orderproduct,
-        })
-    plain_message = strip_tags(html_message)
+    # mail_subject = 'Thank you for your Order!'
+    # html_message = render_to_string('orders/order_received_email.html', {
+    #     'user' : request.user,
+    #     'order': order,
+    #     'orderproduct': orderproduct,
+    #     })
+    # plain_message = strip_tags(html_message)
 
 
 
-    to_email = request.user.email
-    send_email = EmailMultiAlternatives(mail_subject, plain_message, to=[to_email])
-    send_email.attach_alternative(html_message, 'text/html')
-    send_email.send()
+    # to_email = request.user.email
+    # send_email = EmailMultiAlternatives(mail_subject, plain_message, to=[to_email])
+    # send_email.attach_alternative(html_message, 'text/html')
+    # send_email.send()
 
     # Send Order Number And Transaction ID  back to sendData method via JSON response
     data = {
@@ -91,7 +91,6 @@ def payments(request):
     }
 
     return JsonResponse(data)
-    # return render(request, 'orders/payments.html')
 
 
 def place_order(request, total=0, quantity=0):
